@@ -39,10 +39,10 @@ import okhttp3.OkHttpClient
 class DpdpGuardClient(
 	baseUrl: String,
 	private val apiKey: String? = null,
-	accessToken: String? = null,
+	initialAccessToken: String? = null,
 ) {
 	@Volatile
-	private var accessToken: String? = accessToken
+	private var accessToken: String? = initialAccessToken
 
 	private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 	private val errorAdapter = moshi.adapter(ApiError::class.java)
@@ -52,7 +52,6 @@ class DpdpGuardClient(
 			val original = chain.request()
 			val isBrokerTokenCall = original.url.encodedPath.endsWith("/api/v1/auth/broker-token")
 			val token = if (isBrokerTokenCall) apiKey else accessToken
-			System.err.println("DEBUG interceptor: path=${original.url.encodedPath} isBrokerTokenCall=$isBrokerTokenCall apiKey=$apiKey accessTokenField=$accessToken token=$token")
 			val request = if (token != null) {
 				original.newBuilder().header("Authorization", "Bearer $token").build()
 			} else {

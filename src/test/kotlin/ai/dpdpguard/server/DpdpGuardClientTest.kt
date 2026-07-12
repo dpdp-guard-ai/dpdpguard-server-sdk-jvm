@@ -108,7 +108,7 @@ class DpdpGuardClientTest {
 				.setBody("""{"requestId":"dsr_1","type":"erasure","status":"pending"}""")
 				.setHeader("Content-Type", "application/json"),
 		)
-		val client = DpdpGuardClient(baseUrl = baseUrl(), accessToken = "token-abc")
+		val client = DpdpGuardClient(baseUrl = baseUrl(), initialAccessToken = "token-abc")
 
 		client.createDsrRequest(
 			organizationId = "org_1",
@@ -128,7 +128,7 @@ class DpdpGuardClientTest {
 				.setBody("null")
 				.setHeader("Content-Type", "application/json"),
 		)
-		val client = DpdpGuardClient(baseUrl = baseUrl(), accessToken = "token-abc")
+		val client = DpdpGuardClient(baseUrl = baseUrl(), initialAccessToken = "token-abc")
 
 		assertNull(client.getNomination())
 	}
