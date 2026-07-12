@@ -20,6 +20,7 @@ import ai.dpdpguard.server.generated.model.Notice
 import ai.dpdpguard.server.generated.model.OrgSummary
 import ai.dpdpguard.server.generated.model.UpsertNominationRequest
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 
 /**
@@ -43,7 +44,7 @@ class DpdpGuardClient(
 	@Volatile
 	private var accessToken: String? = accessToken
 
-	private val moshi = Moshi.Builder().build()
+	private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 	private val errorAdapter = moshi.adapter(ApiError::class.java)
 
 	private val okHttpClient = OkHttpClient.Builder()
